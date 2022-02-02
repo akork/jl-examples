@@ -170,6 +170,34 @@ class JupyterLabSublime {
             selector: '.CodeMirror-focused'
         });
 
+	commands.addCommand('ak:eval_insert', {
+	    execute: () => {
+		commands.execute('notebook:run-cell');
+		commands.execute('notebook:enter-edit-mode');
+	    } 
+	});
+
+        commands.addKeyBinding({
+            command: 'ak:eval_insert',
+            keys: ['N'],
+            selector: '.jp-Notebook:focus'
+        });
+
+	commands.addCommand('ak:nlbelow', {
+	    execute: () => {
+                const cm = (this.tracker.activeCell.editor as CodeMirrorEditor)
+                                    .editor;
+		cm.execCommand('goLineEnd');
+		cm.execCommand('newlineAndIndent');
+	    } 
+	});
+
+        commands.addKeyBinding({
+            command: 'ak:nlbelow',
+            keys: ['Ctrl Alt 4'],
+            selector: '.CodeMirror-focused'
+        });	
+	
         commands.addCommand('sublime:subword-backward-deletion', {
             execute: () => {
                 const cEditor = (this.tracker.activeCell.editor as CodeMirrorEditor)
